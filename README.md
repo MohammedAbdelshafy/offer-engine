@@ -1,19 +1,28 @@
 # offer-engine
 
 Muse-style real-estate offer engine: plain-English buying criteria in,
-ranked cash offers out.
+ranked cash offers out. v2 is the money-maximizing loop, upgraded from
+influencer research (Olivia Schremmer / Wholesailors / Closer Control et al).
 
-Pipeline (mirrors the wholesale "Muse" loop):
+Pipeline:
 
 1. **Tell it what you want** — criteria: ugly houses, min list price,
    days-on-market window, TLC/as-is keywords, nothing turnkey/flipped,
-   fixed discount under list.
+   fixed discount under list OR LAO mode (offer = list × (1 − discount %)).
 2. **It drafts offers** — filters listings, ranks by discount depth, dedupes
    against your contact log.
-3. **Agent SMS drafts** — one personalized text per candidate
-   ("$X cash, 21-day close"). **Drafts only — never sent by this tool.**
-4. **Contract data** — TREC 1-4-shaped data packet per candidate (Texas),
-   ready to fill into the official form / e-sign.
+3. **3-text SMS sequences** — day 1 opener / day 2 bump + written-offer pitch /
+   day 4 backup-position touch, two rotating human-written variants per touch.
+   **Drafts only — never sent by this tool.**
+4. **Follow-up queue** — scheduled touches (followup_queue.csv).
+5. **Contract data** — TREC 1-4-shaped packet per candidate (Texas) with the
+   equitable-interest disclosure rule and a before-send checklist. Written
+   offers beat texts: a texted number isn't an offer.
+6. **Funnel tracker** — weekly metrics template (reply % / opt-out % /
+   offer-to-contract % per list type).
+
+See WORKFLOW.md for the full operating loop (daily/weekly cadence, the honest
+money math, and what kills profit).
 
 ## Install
 
@@ -21,7 +30,7 @@ Stdlib only. No dependencies.
 
 ```bash
 python3 offer_engine.py listings.csv --contact-log contacted.csv \
-  --buyer-name "Your LLC" --out out/
+  --buyer-name "Your LLC" --offer-mode lao --discount-pct 0.30 --out out/
 ```
 
 ## Inputs
@@ -44,11 +53,17 @@ address,agent_phone,contacted_date,channel,outcome
 - `candidates.csv` — ranked offers. Feed it to
   [lead-scoring-cli](https://github.com/MohammedAbdelshafy/lead-scoring-cli)
   for scoring.
-- `sms_drafts.md` — agent texts. **Not sent.** The founder approves BOTH the
-  message and the recipient batch before anything goes out.
-- `contract_data.json` — TREC 1-4 field packets. Underwrite any candidate with
+- `sms_sequences.md` — day 1/2/4 agent text sequences, A/B variants.
+  **Not sent.** The founder approves BOTH the message and the recipient batch
+  before anything goes out. Compliance banner on every file: quiet hours,
+  DNC scrub, A2P 10DLC, global suppression.
+- `followup_queue.csv` — scheduled day-1/day-2/day-4 touches.
+- `contract_data.json` — TREC 1-4 field packets + TX compliance checklist
+  (equitable-interest disclosure delivered BEFORE assignment) + POF/EMD
+  before-send checklist. Underwrite any candidate with
   comps via [re-deal-packet](https://github.com/MohammedAbdelshafy/re-deal-packet)
   (ARV / 70%-rule MAO) before you commit.
+- `funnel.md` — weekly metrics template.
 
 ## Criteria flags
 
