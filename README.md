@@ -24,6 +24,24 @@ Pipeline:
 See WORKFLOW.md for the full operating loop (daily/weekly cadence, the honest
 money math, and what kills profit).
 
+## buybox.py — the off-market lane
+
+The confirmed DFW buy box as executable rules (Dallas/Tarrant, SFR, ugly/older,
+3+ beds, individual distressed owners, no banks, no listed properties, 65% of
+assessed, cash, as-is):
+
+```bash
+python3 buybox.py properties.csv --out picks/ --pick 10
+```
+
+Scores every row 0-100 across 7 transparent criteria, emits a verdict
+(QUALIFIED / MARGINAL / DISQUALIFIED / VERIFY ADDRESS), the 65%-of-assessed
+offer target, a ranked pick list, and — the key enhancement — a `data_gaps`
+column naming exactly which fields each row is missing (owner, assessed value,
+year built, beds) so you know what to enrich from county records before
+choosing. Tested 10/10 against human-verified verdicts
+(`--test-against <verdict-column>`).
+
 ## Install
 
 Stdlib only. No dependencies.
