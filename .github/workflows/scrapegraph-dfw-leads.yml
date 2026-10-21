@@ -1,0 +1,67 @@
+name: ScrapeGraph DFW Lead Discovery
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_results:
+        description: "Maximum search results per query (1-5 recommended for first run)"
+        required: true
+        default: "5"
+        type: choice
+        options:
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scrapegraph-dfw-leads
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    if: github.repository == 'MohammedAbdelshafy/offer-engine'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SGAI_API_KEY: ${{ secrets.SGAI_API_KEY }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - name: Check API secret exists
+        shell: bash
+        run: |
+          if [[ -z "${SGAI_API_KEY}" ]]; then
+            echo "::error::Missing SGAI_API_KEY repository secret. Add it in Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install ScrapeGraphAI SDK
+        run: python -m pip install --upgrade pip scrapegraph-py
+
+      - name: Discover DFW public listing candidates
+        run: |
+          python scrapegraph_leads.py \
+            --max-results "${{ inputs.max_results }}" \
+            --out out/scrapegraph_candidates.csv
+
+      - name: Upload review-only candidate CSV
+        if: always() && hashFiles('out/scrapegraph_candidates.csv') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: scrapegraph-dfw-candidates-${{ github.run_number }}
+          path: out/scrapegraph_candidates.csv
+          if-no-files-found: error
+          retention-days: 7
