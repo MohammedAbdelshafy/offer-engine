@@ -29,6 +29,15 @@ python scrapegraph_leads.py \
   --out out/dfw_candidates.csv
 ```
 
+## Run from GitHub Actions (after the pull request is merged)
+
+1. Open repository **Settings → Secrets and variables → Actions**.
+2. Add a repository secret named `SGAI_API_KEY` with your ScrapeGraphAI key. Never commit the key or put it in a workflow input.
+3. Open **Actions → ScrapeGraph DFW Lead Discovery → Run workflow** and choose a result cap (start with 1–3 per query to conserve credits).
+4. Download the `scrapegraph-dfw-candidates-<run number>` artifact and review the source URLs before moving anything into the offer workflow.
+
+The workflow is manual-only. It does not send outreach or write to the canonical lead database. It will fail closed if the secret is missing. The workflow is only available in Actions after the PR's workflow file has been merged into the default branch.
+
 ## Output and operating contract
 
 - Writes to a separate CSV by default. It does **not** update the canonical MBM lead database.
