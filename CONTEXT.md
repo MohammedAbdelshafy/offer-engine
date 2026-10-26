@@ -2,11 +2,11 @@
 type: repository
 status: active
 owner_repo: MohammedAbdelshafy/offer-engine
-product_name: Offer Calculator
+product_name: Offer Engine
 source_of_truth: https://github.com/MohammedAbdelshafy/offer-engine
 ---
 
-# Offer Calculator CONTEXT
+# Offer Engine CONTEXT
 
 One job: turn a supplied listing file and explicit buy-box criteria into ranked candidates and draft offer materials for human review.
 
