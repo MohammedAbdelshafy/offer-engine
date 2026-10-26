@@ -1,6 +1,7 @@
 # Offer Calculator
 
-A command-line tool that ranks supplied property listings against your buying criteria and prepares offer drafts for review. It can create follow-up drafts and contract data, but it does not send messages, sign documents or guarantee a deal.
+A command-line tool that filters a supplied listings file using your buy box, ranks candidates, estimates offer numbers from the rules you choose, and drafts follow-up messages for human review.
+Drafts only. It does not scrape listings, send messages, sign contracts, or guarantee that a property is a deal.
 
 Customer-facing name: **Offer Calculator**. The repository, package and command identifiers remain unchanged.
 
