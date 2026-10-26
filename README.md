@@ -1,8 +1,8 @@
-# offer-engine
+# Offer Calculator
 
-Muse-style real-estate offer engine: plain-English buying criteria in,
-ranked cash offers out. v2 is the money-maximizing loop, upgraded from
-influencer research (Olivia Schremmer / Wholesailors / Closer Control et al).
+A command-line tool that ranks supplied property listings against your buying criteria and prepares offer drafts for review. It can create follow-up drafts and contract data, but it does not send messages, sign documents or guarantee a deal.
+
+Customer-facing name: **Offer Calculator**. The repository, package and command identifiers remain unchanged.
 
 Pipeline:
 
