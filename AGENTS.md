@@ -1,4 +1,4 @@
-# Offer Calculator
+# Offer Engine
 
 - Usage and limitations: [README.md](README.md)
 - Workflow: [WORKFLOW.md](WORKFLOW.md)
