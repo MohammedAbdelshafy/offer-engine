@@ -1,4 +1,4 @@
-# Offer Calculator
+# Offer Engine
 
 A command-line tool that filters a supplied listings file using your buy box, ranks candidates, estimates offer numbers from the rules you choose, and drafts follow-up messages for human review.
 Drafts only. It does not scrape listings, send messages, sign contracts, or guarantee that a property is a deal.
